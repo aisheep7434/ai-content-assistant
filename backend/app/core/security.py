@@ -1,7 +1,24 @@
 from passlib.context import CryptContext
 from jose import jwt, JWTError
 from datetime import datetime, timedelta, timezone
+from cryptography.fernet import Fernet
 import os
+
+# 从 .env 文件读取我们的主加密密钥
+ENCRYPTION_KEY = os.getenv("ENCRYPTION_KEY")
+if not ENCRYPTION_KEY:
+    raise ValueError("ENCRYPTION_KEY 未在 .env 中设置")
+
+fernet = Fernet(ENCRYPTION_KEY.encode())
+
+def encrypt_data(data: str) -> str:
+    """加密数据"""
+    return fernet.encrypt(data.encode()).decode()
+
+def decrypt_data(encrypted_data: str) -> str:
+    """解密数据"""
+    return fernet.decrypt(encrypted_data.encode()).decode()
+
 
 # 从 .env 读取配置
 SECRET_KEY = os.getenv("JWT_SECRET_KEY")

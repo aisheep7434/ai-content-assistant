@@ -9,6 +9,7 @@ class User(Base):
     username = Column(String, unique=True, index=True, nullable=False)
     hashed_password = Column(String, nullable=False)
     created_at = Column(DateTime(timezone=True), server_default=func.now())
+    encrypted_api_key = Column(String, nullable=True) # 存储加密后的 API Key
     documents = relationship("Document", back_populates="owner")
 
 # ... (确保 Document 类的代码也是正确的)
