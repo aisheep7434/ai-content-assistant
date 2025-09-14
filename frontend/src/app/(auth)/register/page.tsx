@@ -62,9 +62,9 @@ export default function RegisterPage() {
       // 跳转到登录页面并传递用户名参数
       router.push(`/login?username=${encodeURIComponent(values.username)}`) // 注册成功后跳转到登录页
 
-    } catch (error: any) {
+    } catch (error) {
       toast.error("注册出错", {
-        description: error.message,
+        description: error instanceof Error ? error.message : "注册失败",
       })
     } finally {
       setIsLoading(false)
@@ -73,25 +73,29 @@ export default function RegisterPage() {
 
   // 渲染 UI (使用 Card 美化)
   return (
-    <Card className="w-full max-w-md">
-      <CardHeader>
-        <CardTitle className="text-2xl">创建账户</CardTitle>
-        <CardDescription>
-          请输入用户名和密码以注册新账户。
+    <Card className="w-full max-w-md shadow-lg">
+      <CardHeader className="space-y-2">
+        <CardTitle className="text-2xl font-bold text-center">创建账户</CardTitle>
+        <CardDescription className="text-center">
+          请输入用户名和密码以注册新账户
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="space-y-6">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+
             <FormField
               control={form.control}
               name="username"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>用户名</FormLabel>
+                  <FormLabel className="text-sm font-medium">用户名</FormLabel>
                   <FormControl>
-                    <Input placeholder="创建您的用户名" {...field} />
+                    <Input
+                      placeholder="创建您的用户名"
+                      {...field}
+                      className="h-11 px-4"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -103,23 +107,36 @@ export default function RegisterPage() {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>密码</FormLabel>
+                  <FormLabel className="text-sm font-medium">密码</FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="创建您的密码" {...field} />
+                    <Input
+                      type="password"
+                      placeholder="创建您的密码"
+                      {...field}
+                      className="h-11 px-4"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
 
-            <Button type="submit" disabled={isLoading} className="w-full">
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="w-full h-11 font-medium"
+            >
               {isLoading ? '注册中...' : '创建账户'}
             </Button>
           </form>
         </Form>
-        <div className="mt-4 text-center text-sm">
+
+        <div className="text-center text-sm text-muted-foreground">
           已经有账户了?{" "}
-          <Link href="/login" className="underline">
+          <Link
+            href="/login"
+            className="font-medium text-primary hover:underline transition-colors"
+          >
             点此登录
           </Link>
         </div>

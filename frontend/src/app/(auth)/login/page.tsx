@@ -72,7 +72,7 @@ export default function LoginPage() {
         const errorData = await response.json()
         toast.error(errorData.error || "登录失败")
       }
-    } catch (error) {
+    } catch {
       toast.error("网络错误，请稍后重试")
     } finally {
       setIsLoading(false)
@@ -81,25 +81,29 @@ export default function LoginPage() {
   
   // ⬇️ ⬇️ ⬇️ 渲染 UI (更新为使用 Card) ⬇️ ⬇️ ⬇️
   return (
-    <Card className="w-full max-w-md">
-      <CardHeader>
-        <CardTitle className="text-2xl">登录</CardTitle>
-        <CardDescription>
-          请输入您的凭据以访问您的账户。
+    <Card className="w-full max-w-md shadow-lg">
+      <CardHeader className="space-y-2">
+        <CardTitle className="text-2xl font-bold text-center">登录</CardTitle>
+        <CardDescription className="text-center">
+          请输入您的凭据以访问您的账户
         </CardDescription>
       </CardHeader>
-      <CardContent>
+      <CardContent className="space-y-6">
         <Form {...form}>
-          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-4">
-            
+          <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-5">
+
             <FormField
               control={form.control}
               name="username"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>用户名</FormLabel>
+                  <FormLabel className="text-sm font-medium">用户名</FormLabel>
                   <FormControl>
-                    <Input placeholder="请输入您的用户名" {...field} />
+                    <Input
+                      placeholder="请输入您的用户名"
+                      {...field}
+                      className="h-11 px-4"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -111,24 +115,36 @@ export default function LoginPage() {
               name="password"
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>密码</FormLabel>
+                  <FormLabel className="text-sm font-medium">密码</FormLabel>
                   <FormControl>
-                    <Input type="password" placeholder="请输入您的密码" {...field} />
+                    <Input
+                      type="password"
+                      placeholder="请输入您的密码"
+                      {...field}
+                      className="h-11 px-4"
+                    />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
 
-            <Button type="submit" disabled={isLoading} className="w-full">
+            <Button
+              type="submit"
+              disabled={isLoading}
+              className="w-full h-11 font-medium"
+            >
               {isLoading ? '登录中...' : '登录'}
             </Button>
           </form>
         </Form>
-        
-        <div className="mt-4 text-center text-sm">
+
+        <div className="text-center text-sm text-muted-foreground">
           还没有账户?{" "}
-          <Link href="/register" className="underline">
+          <Link
+            href="/register"
+            className="font-medium text-primary hover:underline transition-colors"
+          >
             立即注册
           </Link>
         </div>
@@ -136,3 +152,4 @@ export default function LoginPage() {
     </Card>
   )
 }
+
