@@ -3,6 +3,7 @@ load_dotenv() # 这会自动加载位于当前工作目录 (backend/) 下的 .en
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware  # 导入 CORS 中间件
 
+
 # 导入我们在步骤 1 中创建的 V1 主路由
 from app.api.v1.api import api_router
 
@@ -20,6 +21,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 # --- 挂载 V1 路由 ---
 # 将我们组合好的所有 V1 路由，统一挂载到 /api/v1 这个前缀下
