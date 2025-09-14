@@ -96,14 +96,18 @@ ai-content-assistant/
 │   │   ├── api/v1/                   # API v1 路由
 │   │   │   ├── api.py                # 主路由配置
 │   │   │   └── endpoints/            # 端点实现
-│   │   │       └── auth.py           # 认证相关端点
+│   │   │       ├── auth.py           # 认证相关端点
+│   │   │       ├── generate.py       # AI 生成端点
+│   │   │       └── documents.py      # 文档管理端点
 │   │   ├── core/                     # 核心功能
 │   │   │   └── security.py          # 安全相关功能
 │   │   ├── db/                       # 数据库相关
 │   │   │   ├── models.py             # 数据库模型
 │   │   │   └── session.py            # 数据库会话
 │   │   └── schemas/                  # Pydantic 模式
-│   │       └── user.py               # 用户模式
+│   │       ├── user.py               # 用户模式
+│   │       ├── document.py           # 文档模式
+│   │       └── token.py              # Token 模式
 │   └── main.py                       # FastAPI 应用入口
 ├── frontend/                         # Next.js 前端
 │   ├── src/
@@ -119,6 +123,8 @@ ai-content-assistant/
 │   │   │   └── globals.css           # 全局样式
 │   │   ├── components/               # React 组件
 │   │   │   └── ui/                   # shadcn/ui 组件
+│   │   ├── providers/                # React Providers
+│   │   │   └── query-provider.tsx    # TanStack Query Provider
 │   │   └── lib/                      # 工具函数
 │   └── package.json                  # 前端依赖
 ├── CLAUDE.md                         # Claude Code 开发指南
@@ -255,20 +261,20 @@ black app/
 | `POST` | `/api/v1/auth/token` | 用户登录 (OAuth2) |
 | `POST` | `/api/v1/auth/logout` | 用户登出 |
 
-### 内容生成 (规划中)
+### 内容生成
 
 | 方法 | 端点 | 描述 |
 |------|------|------|
+| `POST` | `/api/v1/generate/title` | 生成标题 |
 | `POST` | `/api/v1/generate/blog` | 生成博客文章 |
 | `POST` | `/api/v1/generate/product` | 生成产品描述 |
-| `POST` | `/api/v1/generate/email` | 生成邮件内容 |
 
-### 历史记录 (规划中)
+### 历史记录
 
 | 方法 | 端点 | 描述 |
 |------|------|------|
-| `GET` | `/api/v1/history` | 获取历史记录 |
-| `DELETE` | `/api/v1/history/{id}` | 删除历史记录 |
+| `GET` | `/api/v1/documents` | 获取文档历史 |
+| `DELETE` | `/api/v1/documents/{id}` | 删除文档 |
 
 ---
 
